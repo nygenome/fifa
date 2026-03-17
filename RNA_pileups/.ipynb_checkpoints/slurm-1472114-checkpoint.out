@@ -1,0 +1,31 @@
+Using GATK jar /nfs/sw/easybuild/software/GATK/4.5.0.0-GCCcore-12.3.0-Java-17/gatk-package-4.5.0.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -jar /nfs/sw/easybuild/software/GATK/4.5.0.0-GCCcore-12.3.0-Java-17/gatk-package-4.5.0.0-local.jar GetPileupSummaries --minimum-population-allele-frequency 0 --maximum-population-allele-frequency 1 --disable-read-filter MappingQualityAvailableReadFilter --disable-read-filter MappingQualityNotZeroReadFilter --disable-read-filter NotDuplicateReadFilter --disable-read-filter WellformedReadFilter -I /gpfs/commons/projects/p1000/data/Breast/Project_POLY_14658_B04_ESS_RNA_ER/Sample_25025130tRNA/analysis/25025130tRNA.final.bam -V /gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/pileup_summaries/25023660DNAt--25023660-549_temp/25023660DNAt--25023660-549.gatk.vcf -L /gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/pileup_summaries/25023660DNAt--25023660-549_temp/25023660DNAt--25023660-549.gatk.vcf -O /gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/pileup_summaries/25023660DNAt--25023660-549_pileup.txt
+18:37:22.396 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/nfs/sw/easybuild/software/GATK/4.5.0.0-GCCcore-12.3.0-Java-17/gatk-package-4.5.0.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+18:37:22.562 INFO  GetPileupSummaries - ------------------------------------------------------------
+18:37:22.566 INFO  GetPileupSummaries - The Genome Analysis Toolkit (GATK) v4.5.0.0
+18:37:22.566 INFO  GetPileupSummaries - For support and documentation go to https://software.broadinstitute.org/gatk/
+18:37:22.567 INFO  GetPileupSummaries - Executing as vgrether@ni1dc4-006.nygenome.org on Linux v5.15.0-119-generic amd64
+18:37:22.567 INFO  GetPileupSummaries - Java runtime: OpenJDK 64-Bit Server VM v17.0.6+10
+18:37:22.567 INFO  GetPileupSummaries - Start Date/Time: April 25, 2025 at 6:37:22 PM UTC
+18:37:22.567 INFO  GetPileupSummaries - ------------------------------------------------------------
+18:37:22.567 INFO  GetPileupSummaries - ------------------------------------------------------------
+18:37:22.568 INFO  GetPileupSummaries - HTSJDK Version: 4.1.0
+18:37:22.568 INFO  GetPileupSummaries - Picard Version: 3.1.1
+18:37:22.568 INFO  GetPileupSummaries - Built for Spark Version: 3.5.0
+18:37:22.569 INFO  GetPileupSummaries - HTSJDK Defaults.COMPRESSION_LEVEL : 2
+18:37:22.569 INFO  GetPileupSummaries - HTSJDK Defaults.USE_ASYNC_IO_READ_FOR_SAMTOOLS : false
+18:37:22.569 INFO  GetPileupSummaries - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_SAMTOOLS : true
+18:37:22.570 INFO  GetPileupSummaries - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_TRIBBLE : false
+18:37:22.570 INFO  GetPileupSummaries - Deflater: IntelDeflater
+18:37:22.570 INFO  GetPileupSummaries - Inflater: IntelInflater
+18:37:22.570 INFO  GetPileupSummaries - GCS max retries/reopens: 20
+18:37:22.570 INFO  GetPileupSummaries - Requester pays: disabled
+18:37:22.571 INFO  GetPileupSummaries - Initializing engine
+WARNING: BAM index file /gpfs/commons/projects/p1000/data/Breast/Project_POLY_14658_B04_ESS_RNA_ER/Sample_25025130tRNA/analysis/25025130tRNA.final.bai is older than BAM /gpfs/commons/projects/p1000/data/Breast/Project_POLY_14658_B04_ESS_RNA_ER/Sample_25025130tRNA/analysis/25025130tRNA.final.bam
+18:37:22.783 INFO  FeatureManager - Using codec VCFCodec to read file file:///gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/pileup_summaries/25023660DNAt--25023660-549_temp/25023660DNAt--25023660-549.gatk.vcf
+18:37:22.912 INFO  FeatureManager - Using codec VCFCodec to read file file:///gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/pileup_summaries/25023660DNAt--25023660-549_temp/25023660DNAt--25023660-549.gatk.vcf
+18:37:23.343 INFO  IntervalArgumentCollection - Processing 15026 bp from intervals
+18:37:23.386 INFO  GetPileupSummaries - Done initializing engine
+18:37:23.396 INFO  ProgressMeter - Starting traversal
+18:37:23.397 INFO  ProgressMeter -        Current Locus  Elapsed Minutes        Loci Processed      Loci/Minute

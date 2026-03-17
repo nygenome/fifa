@@ -1,0 +1,36 @@
+Using GATK jar /nfs/sw/easybuild/software/GATK/4.5.0.0-GCCcore-12.3.0-Java-17/gatk-package-4.5.0.0-local.jar
+Running:
+    java -Dsamjdk.use_async_io_read_samtools=false -Dsamjdk.use_async_io_write_samtools=true -Dsamjdk.use_async_io_write_tribble=false -Dsamjdk.compression_level=2 -jar /nfs/sw/easybuild/software/GATK/4.5.0.0-GCCcore-12.3.0-Java-17/gatk-package-4.5.0.0-local.jar IndexFeatureFile -I /gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/pileup_summaries/25023660DNAt--25023660-549_temp/25023660DNAt--25023660-549.gatk.vcf
+18:37:18.071 INFO  NativeLibraryLoader - Loading libgkl_compression.so from jar:file:/nfs/sw/easybuild/software/GATK/4.5.0.0-GCCcore-12.3.0-Java-17/gatk-package-4.5.0.0-local.jar!/com/intel/gkl/native/libgkl_compression.so
+18:37:18.307 INFO  IndexFeatureFile - ------------------------------------------------------------
+18:37:18.311 INFO  IndexFeatureFile - The Genome Analysis Toolkit (GATK) v4.5.0.0
+18:37:18.311 INFO  IndexFeatureFile - For support and documentation go to https://software.broadinstitute.org/gatk/
+18:37:18.311 INFO  IndexFeatureFile - Executing as vgrether@ni1dc4-006.nygenome.org on Linux v5.15.0-119-generic amd64
+18:37:18.312 INFO  IndexFeatureFile - Java runtime: OpenJDK 64-Bit Server VM v17.0.6+10
+18:37:18.312 INFO  IndexFeatureFile - Start Date/Time: April 25, 2025 at 6:37:17 PM UTC
+18:37:18.312 INFO  IndexFeatureFile - ------------------------------------------------------------
+18:37:18.313 INFO  IndexFeatureFile - ------------------------------------------------------------
+18:37:18.314 INFO  IndexFeatureFile - HTSJDK Version: 4.1.0
+18:37:18.314 INFO  IndexFeatureFile - Picard Version: 3.1.1
+18:37:18.314 INFO  IndexFeatureFile - Built for Spark Version: 3.5.0
+18:37:18.315 INFO  IndexFeatureFile - HTSJDK Defaults.COMPRESSION_LEVEL : 2
+18:37:18.316 INFO  IndexFeatureFile - HTSJDK Defaults.USE_ASYNC_IO_READ_FOR_SAMTOOLS : false
+18:37:18.316 INFO  IndexFeatureFile - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_SAMTOOLS : true
+18:37:18.316 INFO  IndexFeatureFile - HTSJDK Defaults.USE_ASYNC_IO_WRITE_FOR_TRIBBLE : false
+18:37:18.317 INFO  IndexFeatureFile - Deflater: IntelDeflater
+18:37:18.318 INFO  IndexFeatureFile - Inflater: IntelInflater
+18:37:18.318 INFO  IndexFeatureFile - GCS max retries/reopens: 20
+18:37:18.318 INFO  IndexFeatureFile - Requester pays: disabled
+18:37:18.319 INFO  IndexFeatureFile - Initializing engine
+18:37:18.320 INFO  IndexFeatureFile - Done initializing engine
+18:37:18.492 INFO  FeatureManager - Using codec VCFCodec to read file file:///gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/pileup_summaries/25023660DNAt--25023660-549_temp/25023660DNAt--25023660-549.gatk.vcf
+18:37:18.570 INFO  ProgressMeter - Starting traversal
+18:37:18.572 INFO  ProgressMeter -        Current Locus  Elapsed Minutes     Records Processed   Records/Minute
+18:37:19.245 INFO  ProgressMeter -       chrX:145921061              0.0                 15026        1355729.3
+18:37:19.245 INFO  ProgressMeter - Traversal complete. Processed 15026 total records in 0.0 minutes.
+18:37:19.460 INFO  IndexFeatureFile - Successfully wrote index to /gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/pileup_summaries/25023660DNAt--25023660-549_temp/25023660DNAt--25023660-549.gatk.vcf.idx
+18:37:19.460 INFO  IndexFeatureFile - Shutting down engine
+[April 25, 2025 at 6:37:19 PM UTC] org.broadinstitute.hellbender.tools.IndexFeatureFile done. Elapsed time: 0.02 minutes.
+Runtime.totalMemory()=294649856
+Tool returned:
+/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/pileup_summaries/25023660DNAt--25023660-549_temp/25023660DNAt--25023660-549.gatk.vcf.idx

@@ -1,0 +1,109 @@
+Additional Notes of Other Commands that I wrote: 
+
+
+##### JUST ME PLAYING AROUND WITH A SPECIFIC SAMPLE #####
+
+vcf_file="/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/vcfs/24000610-TDNA--24000610-NDNA.snv.indel.final.v6.annotated.ebm.high_confidence.vcf"
+bam="/gpfs/commons/projects/p1000/data/Breast/Project_POLY_14658_B05_ESS_RNA_ER/Sample_24000610-TRNA/analysis/24000610-TRNA.final.bam"
+sample="24000610-TDNA"
+
+#bcftools view -H $vcf_file | awk -F'\t' '{split($8, arr, ";"); print arr[5]}' | awk -F'|' '{print $4}' | grep -E 'missense_variant|start_lost|stop_gained|synonymous_variant' | wc -l
+
+bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%EBM\t%CSQ' "$vcf_file" | awk -F'\t' '{split($6, arr, "|"); if(arr[4] ~ /^(missense_variant|start_lost|stop_gained|synonymous_variant)$/) print $0}' | awk -F"\t" '{ OFS="\t"} {print $1, $2, $3, $4, $5}' > $temp_file
+
+while IFS=$'\t' read -r chrom pos ref alt ebm; do 
+    line=$(samtools mpileup -r "$chrom:$pos-$pos" $bam | cut -f 5 | tr '[a-z]' '[A-Z]' | fold -w 1 | sort | uniq -c)
+    total_coverage=$(samtools mpileup -r "$chrom:$pos-$pos" $bam | cut -f 4)
+    coverage_ref=$(echo "$line" | grep -w "$ref" | awk '{print $1}')
+    coverage_var=$(echo "$line" | grep -w "$alt" | awk '{print $1}')
+    echo -e "$sample\t$chrom\t$pos\t$ebm\t$total_coverage\t$ref\t$coverage_ref\t$alt\t$coverage_var" >> "$dir/${sample}_exon_pileup.txt"
+done < $temp_file
+
+
+##### Trying it out with that one sample #######
+
+bcftools query -f '%CHROM\t%POS\t[ %AF]\n' $vcf | awk -F"\t" '{ OFS="\t"} {split($3, arr, " "); print $1, $2, arr[2]}' |  bgzip -c > ./annot.txt.gz
+tabix -s1 -b2 -e2 annot.txt.gz
+echo -e '##INFO=<ID=AF,Number=1,Type=Float,Description="Population Allele Frequencies">' > hdr.txt
+bcftools annotate -s "24000610-TDNA" -a annot.txt.gz -h hdr.txt -c CHROM,POS,INFO/AF $vcf > $vcf_b
+
+
+sample="24000610-TDNA"
+chr="chr1"
+
+vcf="/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/vcfs/24000610-TDNA--24000610-NDNA.snv.indel.final.v6.annotated.ebm.high_confidence.vcf"
+vcf_b="/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/pileup_summaries/24000610-TDNA--24000610-NDNA.snv.indel.final.v6.annotated.ebm.high_confidence.vcf"
+bam="/gpfs/commons/projects/p1000/data/Breast/Project_POLY_14658_B05_ESS_RNA_ER/Sample_24000610-TRNA/analysis/24000610-TRNA.final.bam"
+
+module purge
+module load gatk
+
+out_file=./${sample}_${chr}_pileup_summary.txt
+
+bcftools view $vcf_b --regions $chr -o ${sample}_${chr}.vcf.gz -Oz 
+gatk IndexFeatureFile -I ${sample}_${chr}.vcf.gz
+
+vcf_c="${sample}_${chr}.vcf.gz"
+
+sbatch --mem=8G --job-name=pileup_chr1 --wrap="gatk GetPileupSummaries \
+--minimum-population-allele-frequency 0 \
+--maximum-population-allele-frequency 1 \
+--disable-read-filter MappingQualityAvailableReadFilter \
+--disable-read-filter MappingQualityNotZeroReadFilter \
+--disable-read-filter NotDuplicateReadFilter \
+--disable-read-filter WellformedReadFilter \
+-I $bam \
+-V $vcf_c \
+-L $vcf_c \
+-O $out_file"
+
+#### For running samtools
+temp_file="/nfs/home/vgrether/test/ffpe_filtering/temp/${sample}_temp.txt"
+
+if [[ ! -f $vcf_file ]]; then
+    echo "Incorrect path for VCF_File: $vcf_file."
+elif [[ ! -f $bam ]]; then
+    echo "Incorrect path for BAM_File: $bam."
+else
+    bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%EBM' "$vcf_file" | awk -F"\t" '{ OFS="\t"} {print $1, $2, $3, $4, $5}' > $temp_file
+    while IFS=$'\t' read -r chrom pos ref alt ebm; do 
+        line=$(samtools mpileup -r "$chrom:$pos-$pos" $bam | cut -f 5 | tr '[a-z]' '[A-Z]' | fold -w 1 | sort | uniq -c)
+        total_coverage=$(samtools mpileup -r "$chrom:$pos-$pos" $bam | cut -f 4)
+        coverage_ref=$(echo "$line" | grep -w "$ref" | awk '{print $1}')
+        coverage_var=$(echo "$line" | grep -w "$alt" | awk '{print $1}')
+        echo -e "$sample\t$chrom\t$pos\t$ebm\t$total_coverage\t$ref\t$coverage_ref\t$alt\t$coverage_var" >> "$dir/${sample}_pileup.txt"
+    done < $temp_file
+fi 
+
+tail +2 
+
+#FINDING CANCER GENES 
+dir="/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/HighConfidence/vcfs"
+output="/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/SAMBAI/predictions/predictions.HighConf.cancerGenes.txt"
+
+echo -e 'Cancer_Gene\tCGC_Tier\tTumor_Tissues_Somatic' > $output
+
+for vcf_file in $(find $dir -name "*.snv.indel.final.v6.annotated.ebm.high_confidence.vcf" | xargs realpath); do
+    sample=$(basename $vcf_file | sed 's\--.*\\')
+    echo $sample
+    bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%EBM\t%CancerGeneCensus\n' "$vcf_file" | \
+    awk -F'\t' -v sample="$sample"  'BEGIN {OFS="\t"} {
+        n = split($6, arr, "|");
+        if (arr[1] != "" && arr[3] == "yes") {
+            print sample, $1, $2, $3, $4, $5, arr[1], arr[5]
+        }
+    }' >> $output
+done
+
+dir="/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/blgsp/vcfs/"
+dir_vcfs="/gpfs/commons/groups/compbio/projects/FFPE_filtering/blgsp/v7"
+
+
+for vcf_file in $(find $dir -name "*.snv.indel.final.v7.annotated.ebm.vcf.gz" | xargs realpath); do
+    sample=$(basename $vcf_file | sed 's/--.*//')
+    if [ ! -d $dir/${sample}_isec ]; then
+        mkdir $dir/${sample}_isec
+    fi
+done
+
+cl
