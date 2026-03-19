@@ -1,14 +1,14 @@
 # FIFA for FFPE Filtering
 
-README last updated Dec. 16, 2025
+README last updated March 17, 2026
 
 To access the help manual, run:
 
 ```bash
-/path/to/fifa/src/cli.py help
+/path/to/fifa/src/cli.py --help
 ```
 
-*Note: Ideally, the repo would automatically create symlink can be created between `/path/to/fifa/src/cli.py` and the command `fifa` for more convenience. But baby steps*
+*Note: For convenience, the user can create a symlink between `/path/to/fifa/src/cli.py` and the command `fifa`*
 
 ---
 
@@ -17,7 +17,7 @@ To access the help manual, run:
 For each SNV specified in a VCF file, extract features using the sample's VCF and BAM file. Creates a table of features that can be used to make predictions, or to train a new EBM model. 
 
 ```bash
-/path/to/fifa/src/cli.py extract -s [SAMPLE NAME] [COHORT] [VCF PATH] [BAM PATH] [REF SEQ] -o [OUTPUT DIR] -n [NUMBER OF THREADS ALLOCATED]
+/path/to/fifa/src/cli.py extract -s [SAMPLE NAME] -c [COHORT] -v [VCF PATH] -b [BAM PATH] -r [REF SEQ] -o [OUTPUT DIR] -n [NUMBER OF THREADS ALLOCATED]
 ```
 
 _Optional Parameters:_ 
@@ -28,7 +28,7 @@ _Optional Parameters:_
   -l 'INFO/Label' 'Real'
   ```
   
-- If intending to run my original paralelization scheme (from before my talk with Andre) include the flag "-p". In practice there's no real reason to do this other than for testing resource allocation / resource efficiency. 
+- If intending to run the original feature extraction script, please include the flag "-p". The original script does not properly paralelize processes across resources, so in practice there's no real reason to use it other than for testing resource allocation / resource efficiency. 
   ```
   -p  # Include this flag to enable the original scheme.
   ```
@@ -37,18 +37,18 @@ _Optional Parameters:_
 #### 2) Predict
 
 ```bash
-/path/to/fifa/src/cli.py predict -s [SAMPLE NAME] [VCF PATH] -f [FEATURES PATH] -o [OUTPUT DIR FOR VCF WITH ANNOTATIONS] -m [PATHS TO EBM MODELS]
+/path/to/fifa/src/cli.py predict -s [SAMPLE NAME] -v [VCF PATH] -f [FEATURES PATH] -o [OUTPUT DIR FOR VCF WITH ANNOTATIONS] -m [PATHS TO EBM MODELS]
 ```
 
 #### Notes on Model Paths:
 If multiple models are submitted, they will automatically be merged together. Current FIFA models are:
 
-- **DLBCL**: `/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/models/ebm_hyperparams_DLBCL.pkl`
-- **ROT**: `/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/models/ebm_hyperparams_ROT.pkl`
-- **HTMCP**: `/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/models/ebm_hyperparams_CGCI-HTMCP.pkl`
-- **BLGSP**: `/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/models/ebm_hyperparams_CGCI-BLGSP.pkl`
+- **NYGC1**: `/path/to/fifa/models/ebm_hyperparams_NYGC1.pkl`
+- **NYGC2**: `/path/to/fifa/models/ebm_hyperparams_NYGC2.pkl`
+- **HTMCP**: `/path/to/fifa/models/ebm_hyperparams_CGCI-HTMCP.pkl`
+- **BLGSP**: `/path/to/fifa/models/ebm_hyperparams_CGCI-BLGSP.pkl`
 
-(In the future I'll upload these to the repo)
+To merge one of the core FIFA models, the user can provide either the path or simply specify the cohort by name [NYGC1, NYGC2, HTMCP, BLGSP]
 
 #### Optional Parameters:
 - Add annotations from the RNA pileups to the output VCF. Will automatically rescue variants erroneously discarded by FIFA:
@@ -68,7 +68,7 @@ Train a new EBM model using a new cohort
 _Note:_ 
 The program assumes that the directory contains a series of files in the format "[SAMPLE]_extracted_features.csv". For example, see :
 ```
-/gpfs/commons/groups/compbio/projects/FFPE_filtering/vgrether/ebm/blgsp/extracted_features
+/path/to/fifa/data/1395_tumor_ffpe_wgs_extracted_features.csv
 ```
 
 _Optional Parameters:_ 
