@@ -77,7 +77,6 @@ def generate_output_vcf_file(predictions, rna_annotations, vcf_path):
 
     global predictions_path 
     outpath = os.path.join(predictions_path, re.sub(r'\.vcf(\.gz)?$', '.fifa.vcf', os.path.basename(vcf_path)))
-    print(rna_annotations['Variant'].head())
 
     if os.path.isfile(outpath):
         os.remove(outpath)
@@ -103,7 +102,7 @@ def generate_output_vcf_file(predictions, rna_annotations, vcf_path):
             pred = prediction_dict.get(position)
             prob = probability_dict.get(position)
             
-            if (pred is not None) and (prob is not None) and variant.info.get('HighConfidence'):
+            if (pred is not None) and (prob is not None): #and variant.info.get('HighConfidence')
                 positions.add(position)
                 variant.info['FIFA_LABEL'] = int(pred)
                 variant.info['FIFA_PROB'] = round(prob, 4)
