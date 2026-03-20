@@ -8,9 +8,9 @@ package:
     name: FFPE
     version: 0.1.0
 channels:
-  - defaults
   - bioconda
   - conda-forge
+  - defaults
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
@@ -575,7 +575,3 @@ dependencies:
       - zipp==3.23.0
       - zope-event==6.0
       - zope-interface==8.0.1
-
-#test:
-#    commands:
-#        - ffpolish --help
