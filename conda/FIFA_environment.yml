@@ -1,0 +1,41 @@
+# conda env export > FIFA_filtering.yml
+# 
+# ------------------------------------------------
+
+name: FIFA
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - pysam
+  - pysamstats
+  - biopython
+
+  - r-base=4.4
+  - bioconductor-biostrings
+  - bioconductor-genomicranges
+  - bioconductor-rsamtools
+  - bioconductor-variantannotation
+  - jupyterlab
+
+  - bcftools
+  - gatk4
+
+  - pip
+  - pip:
+      - dash
+      - plotly
+      - shap
+      - xgboost
+      - optuna
+      - igv-reports
+      - interpret

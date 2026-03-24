@@ -5,8 +5,6 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
-import seaborn as sns
-import glob
 from sklearn.metrics import roc_auc_score, accuracy_score, precision_score, balanced_accuracy_score, f1_score
 from interpret.glassbox import ExplainableBoostingClassifier
 from sklearn.model_selection import StratifiedKFold
@@ -14,7 +12,6 @@ import time
 import multiprocessing as mp
 from multiprocessing import Pool
 from json import dump
-from sklearn.preprocessing import FunctionTransformer, StandardScaler
 from concurrent.futures import ProcessPoolExecutor
 import sys
 from helper_funcs import load_variants

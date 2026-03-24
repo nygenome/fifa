@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
-from scipy.stats.mstats import winsorize
 from sklearn.metrics import roc_auc_score, accuracy_score, precision_score, balanced_accuracy_score, f1_score, recall_score
 from interpret.glassbox import ExplainableBoostingClassifier
 from interpret.glassbox import merge_ebms
@@ -12,7 +11,6 @@ import multiprocessing as mp
 from multiprocessing import Pool
 from json import dump
 from scipy.stats import trim_mean
-from sklearn.preprocessing import FunctionTransformer, StandardScaler
 import sys
 import glob
 import re
