@@ -1,4 +1,4 @@
-# conda env export > FIFA_filtering.yml
+OB# conda env export > FIFA_filtering.yml
 # 
 # ------------------------------------------------
 
@@ -7,7 +7,6 @@ channels:
   - conda-forge
   - bioconda
   - defaults
-  - r
 
 dependencies:
   - python=3.12
