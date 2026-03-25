@@ -1,7 +1,21 @@
 # FIFA for FFPE Filtering
 
-README last updated March 17, 2026
+README last updated March 25, 2026
 
+## Installation
+
+Create environment
+```bash
+conda env create -f conda/FIFA_environment.yml
+```
+
+Install MOBSTER for R
+```R
+> install.packages("devtools")
+> devtools::install_github("caravagnalab/mobster")
+```
+
+###
 To access the help manual, run:
 
 ```bash
