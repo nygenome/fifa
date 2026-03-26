@@ -1,4 +1,4 @@
-OB# conda env export > FIFA_filtering.yml
+# conda env export > FIFA_filtering.yml
 # 
 # ------------------------------------------------
 
@@ -22,6 +22,12 @@ dependencies:
 
   - r-base=4.4
   - r-devtools
+  - r-rcpparmadillo
+  - r-igraph
+  - r-googlesheets4
+  - r-nloptr
+  - r-polyclip
+  - r-ggpubr
   - bioconductor-biostrings
   - bioconductor-genomicranges
   - bioconductor-rsamtools
