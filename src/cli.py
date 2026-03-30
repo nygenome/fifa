@@ -26,15 +26,15 @@ if __name__ == '__main__':
 
     ## Extract features from BAM/VCF files for making predictions or retraining
     feature_parser = subparsers.add_parser('extract', help='Extract features from VCF/BAM files for making predictions or retraining')
-    feature_parser.add_argument('-s', '--sample', nargs=1, required=True, 
+    feature_parser.add_argument('-s', '--sample', required=True, 
                             help='Name of sample being submitted to be processed.')
-    feature_parser.add_argument('-v', '--vcffile', nargs=1, required=True, 
+    feature_parser.add_argument('-v', '--vcffile', required=True, 
                             help='Path to sample\'s VCF file, with variants to extract features for.')
-    feature_parser.add_argument('-b', '--bamfile', nargs=1, required=True, 
+    feature_parser.add_argument('-b', '--bamfile', required=True, 
                             help='Path to sample\'s BAM file, with reads to extract features for.')
-    feature_parser.add_argument('-r', '--refseq', nargs=1, required=True, 
+    feature_parser.add_argument('-r', '--refseq', required=True, 
                             help='Path to reference file used for alignment of the sample\'s BAM file.')
-    feature_parser.add_argument('-c', '--cohort', nargs=1, default='NA', 
+    feature_parser.add_argument('-c', '--cohort', default='NA', 
                             help='Sample\'s Cohort')
     feature_parser.add_argument('-n', '--num_threads', default=2, type=int,
                                 help='Number of threads allocated')            
@@ -69,9 +69,9 @@ if __name__ == '__main__':
     
     ## Make predictions on new samples
     predict_parser = subparsers.add_parser('predict', help='Create predictions on labeled or unlabeled data')
-    predict_parser.add_argument('-s', '--sample', nargs=1,
+    predict_parser.add_argument('-s', '--sample', required=True,
                             help='Sample Name \nFor submitting individual sample for processing.')
-    predict_parser.add_argument('-v', '--vcffile', nargs=1,
+    predict_parser.add_argument('-v', '--vcffile', required=True,
                             help='Path to sample\'s VCF file, with variants to classify.')
     predict_parser.add_argument('-f', '--features_path', nargs='+', 
                                     help='Paths to CSV files with features for each variant', required=True)
