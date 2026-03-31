@@ -156,7 +156,7 @@ def get_zero_score_names(models):
 def remove_zero_score_terms_by_name(model, zero_score_names):
     return model.remove_terms(zero_score_names)
 
-def predict(extracted_features_paths, outpath, model_file, pairs_path=None, sample=None, vcf_path=None):
+def predict(extracted_features_paths, outpath, model_file, pairs_path=None, vcf_path=None):
     global predictions_path 
     global logger 
 
@@ -183,7 +183,9 @@ def predict(extracted_features_paths, outpath, model_file, pairs_path=None, samp
         if isinstance(model_file, list):
             models = []
             for i, model_path in enumerate(model_file):
-                fifa_install_dir=os.path.dirname(os.getcwd())
+                script_path = os.path.abspath(__file__)
+                directory_path = os.path.dirname(script_path)
+                fifa_install_dir=os.path.dirname(directory_path + "/../")
                 if model_path == "NYGC1":
                     path= os.path.join(fifa_install_dir, 'models/ebm_hyperparams_NYGC1.pkl')
                     with open(path, 'rb') as file:
@@ -210,7 +212,7 @@ def predict(extracted_features_paths, outpath, model_file, pairs_path=None, samp
                     model = pickle.load(open(model_path, 'rb'))
                     models.append(model)
             
-            if models.is_empty():
+            if not models:
                 raise ValueError("No models were loaded. Please check the input model paths.")
 
             zero_score_names = get_zero_score_names(models)
