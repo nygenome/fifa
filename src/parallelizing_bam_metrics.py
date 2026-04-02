@@ -437,13 +437,14 @@ def read_vcf(sample, label, vcf_path, queue, num_threads):
     vcffile.close()
 
 def get_mobster_tail_scores(sample, vcf_path, out_path, mobster_scores):
-    outfile = os.path.join(os.path.basename(out_path), f'{sample}_mobster.csv')
+    outfile = os.path.join(os.path.dirname(out_path), f'{sample}_mobster.csv')
 
     script_path = os.path.abspath(__file__)
     directory_name = os.path.dirname(script_path)
 
     process = subprocess.run(
-        ['Rscript', directory_name + '/run_mobster.R', sample, vcf_path, outfile],
+        # ['Rscript', directory_name + '/run_mobster.R', sample, vcf_path, outfile],
+        [directory_name + '/run_mobster.R', sample, vcf_path, outfile],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE
         )
