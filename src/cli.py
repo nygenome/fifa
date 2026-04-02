@@ -27,7 +27,7 @@ if __name__ == '__main__':
     ## Extract features from BAM/VCF files for making predictions or retraining
     feature_parser = subparsers.add_parser('extract', help='Extract features from VCF/BAM files for making predictions or retraining')
     feature_parser.add_argument('-s', '--sample', required=True, 
-                            help='Name of sample being submitted to be processed.')
+                            help='Name of sample from VCF being submitted to be processed.')
     feature_parser.add_argument('-v', '--vcffile', required=True, 
                             help='Path to sample\'s VCF file, with variants to extract features for.')
     feature_parser.add_argument('-b', '--bamfile', required=True, 
