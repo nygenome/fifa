@@ -1,4 +1,4 @@
-#! /usr/bin/Rscript
+#!/usr/bin/env Rscript
 
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager", repos="http://cran.r-project.org")
