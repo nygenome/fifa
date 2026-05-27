@@ -1,0 +1,15 @@
+setuptools<82
+pybind11
+Cython<3
+numpy==1.24.4
+biopython==1.83
+scipy==1.10.1
+scikit-learn==1.3.2
+matplotlib==3.7.5
+pandas==2.0.3
+seaborn==0.13.2
+optuna==4.5.0
+pysam==0.15.4
+pysamstats==1.1.2
+aplr==10.6.1
+interpret==0.5.1

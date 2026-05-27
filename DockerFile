@@ -1,0 +1,53 @@
+FROM rocker/r-ver:4.0.3
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies for R/Bioconductor packages and Python wheels.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    ca-certificates \
+    cmake \
+    gfortran \
+    git \
+    libbz2-dev \
+    libcurl4-openssl-dev \
+    liblzma-dev \
+    libssl-dev \
+    libuv1-dev \
+    libxml2-dev \
+    pkg-config \
+    python3-dev \
+    python3-pip \
+    python3-setuptools \
+    python3-venv \
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install R packages
+WORKDIR /tmp/build
+COPY install_packages.R ./
+RUN Rscript install_packages.R
+
+# Install Python requirements
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv "$VIRTUAL_ENV"
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+RUN python -m pip install --no-cache-dir --upgrade \
+    "pip<25" \
+    "setuptools<82" \
+    wheel \
+    pybind11 \
+    "Cython<3" \
+    "numpy==1.24.4" \
+    "pysam==0.15.4" \
+    && python -c "import pkg_resources, pybind11, numpy, pysam"
+COPY requirements.txt ./
+RUN python -m pip install --no-build-isolation --no-cache-dir -r requirements.txt
+
+COPY . /opt/work
+
+# Install FIFA into an empty directory; cloning into the copied build context
+# fails once that context contains files.
+WORKDIR /opt/fifa
+RUN git clone --depth 1 https://github.com/nygenome/fifa.git .
+RUN echo "alias fifa='python /opt/fifa/src/cli.py'" >> /etc/bash.bashrc
