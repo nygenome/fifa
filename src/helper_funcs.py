@@ -47,27 +47,26 @@ def convert_hot_encodings(variants):
     return variants
 
 def scale_features(variants):
-    features_to_scale = [
-    "tumor_reads_filtered",
-    "tumor_ref_avg_base_quality",
-    "tumor_ref_avg_clipped_length",
-    "tumor_ref_avg_num_mismatches_as_fraction",
-    "tumor_ref_avg_sum_mismatch_qualities",
-    "tumor_ref_med_base_quality",
-    "tumor_ref_med_frag_len",
-    "tumor_VAF",
-    "tumor_var_avg_base_quality",
-    "tumor_var_avg_clipped_length",
-    "tumor_var_avg_num_mismatches_as_fraction",
-    "tumor_var_avg_sum_mismatch_qualities",
-    "tumor_var_med_base_quality",
-    "tumor_var_med_frag_len",
-    "window_dup_frac",
-    "window_improper_frac",
-    "window_median_frag_len",
-    "window_read_filter_frac"
-    ]
-    features_to_keep_both = ['tumor_depth']
+    features_to_scale = []
+    features_to_keep_both = ["tumor_depth",
+                             "tumor_reads_filtered",
+                             "tumor_ref_avg_base_quality",
+                             "tumor_ref_avg_clipped_length",
+                             "tumor_ref_avg_num_mismatches_as_fraction",
+                             "tumor_ref_avg_sum_mismatch_qualities",
+                             "tumor_ref_med_base_quality",
+                             "tumor_ref_med_frag_len",
+                             "tumor_VAF",
+                             "tumor_var_avg_base_quality",
+                             "tumor_var_avg_clipped_length",
+                             "tumor_var_avg_num_mismatches_as_fraction",
+                             "tumor_var_avg_sum_mismatch_qualities",
+                             "tumor_var_med_base_quality",
+                             "tumor_var_med_frag_len",
+                             "window_dup_frac",
+                             "window_improper_frac",
+                             "window_median_frag_len",
+                             "window_read_filter_frac"]
 
     for feature in set([*features_to_scale, *features_to_keep_both]):
         variants[f'{feature}_scaled'] = variants.groupby('Sample')[feature].transform(
